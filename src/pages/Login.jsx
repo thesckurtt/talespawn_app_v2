@@ -35,7 +35,7 @@ const Login = () => {
       </div>
       <div className="d-flex flex-column justify-content-center align-items-center">
         <form onSubmit={(e) => handleSubmit(e)} className="d-flex flex-column justify-content-center align-items-center">
-          {error && <div class="alert alert-danger fw-medium" role="alert">
+          {error && <div className="alert alert-danger fw-medium" role="alert">
             Credênciais inválidas! Tente novamente.
           </div>}
           <InptGroup addClass={addClassInptGroup} name={'email'} type={'text'} label={'Email'} value={email} handleChange={setEmail} />
