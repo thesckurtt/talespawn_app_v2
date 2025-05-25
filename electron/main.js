@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import dotenv from 'dotenv';
 import path from 'path'
 import { User } from './model/User.js';
+import { Auth } from './model/Auth.js';
 dotenv.config()
 let mainWindow = null
 
@@ -27,7 +28,7 @@ const createMainWindow = () => {
 app.whenReady().then(() => {
   createMainWindow();
   
-  User.getAllUsers().then(result => console.log(result))
+  // User.getAllUsers().then(result => console.log(result))
 
   app.on('activate', function () {
     if (BrowserWindow.getAllWindows().length === 0) createMainWindow();
@@ -37,6 +38,13 @@ app.whenReady().then(() => {
 ipcMain.on('actions-fullscreen', () => {
   mainWindow.fullScreen = !mainWindow.fullScreen
 })
+
+// Autenticação via IPC
+ipcMain.handle('auth:login', async(event, data)=>{
+  const response = await Auth.login(data)
+  console.log(response)
+})
+
 
 if (process.env.APP_DEBUG === "true") {
   ipcMain.on("actions-devtools", () => {
