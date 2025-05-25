@@ -125,6 +125,7 @@ const Register = () => {
 
       const sound = new Audio(characterSelected.main_audio)
       sound.autoplay = false
+      sound.volume = 1
       sound.play()
 
       audioRef.current = sound
@@ -137,7 +138,7 @@ const Register = () => {
   useEffect(() => {
     const sound = new Audio(soundtrack)
     sound.loop = true
-    sound.volume = 0.3
+    sound.volume = 0.2
     sound.play()
   }, [])
 
