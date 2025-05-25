@@ -17,6 +17,8 @@ import main_audio_character_2 from '../assets/audio/aud_2.mp3'
 import main_audio_character_3 from '../assets/audio/aud_3.mp3'
 import main_audio_character_4 from '../assets/audio/aud_4.mp3'
 
+import soundtrack from '../assets/audio/soundtrack_action.mp3'
+
 const characters = [
   {
     id: 1,
@@ -76,9 +78,10 @@ const Register = () => {
 
   const navigate = useNavigate()
 
-  const swiperRef = useRef(null);
+  const swiperRef = useRef(null)
   const formRef = useRef(null)
-  const videoRef = useRef(null);
+  const videoRef = useRef(null)
+  const audioRef = useRef(null)
 
   const [characterSelectedIndex, setCharacterSelectedIndex] = useState(0)
   const [characterSelected, setCharacterSelected] = useState(characters[0])
@@ -88,7 +91,6 @@ const Register = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [nickname, setNickname] = useState('')
-  const [backgroundCharacter, setBackgroundCharacter] = useState(bg_video_character_1)
 
   // useEffect para carregar o Swiper
   useEffect(() => {
@@ -115,10 +117,29 @@ const Register = () => {
 
   // useEffect para reproduzir frase de efeito do personagem
   useEffect(() => {
-    const sound = new Audio(characterSelected.main_audio)
-    sound.
+    const timeoutId = setTimeout(() => {
+      if (audioRef.current) {
+        audioRef.current.pause()
+        audioRef.current.currentTime = 0
+      }
+
+      const sound = new Audio(characterSelected.main_audio)
+      sound.autoplay = false
       sound.play()
+
+      audioRef.current = sound
+
+    }, 600)
+    return () => clearTimeout(timeoutId)
+
   }, [characterSelected])
+
+  useEffect(() => {
+    const sound = new Audio(soundtrack)
+    sound.loop = true
+    sound.volume = 0.3
+    sound.play()
+  }, [])
 
   return (
     <>
