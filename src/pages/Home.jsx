@@ -14,8 +14,8 @@ const Home = () => {
           <img src={logo_xxl} alt="Logo Talespawn" />
         </div>
         <div className="d-flex flex-column">
-          <a className="btn-rpg mb-3">Login</a>
-          <a className="btn-rpg">Register</a>
+          <button className="btn-rpg mb-3 c-pointer">Login</button>
+          <button className="btn-rpg c-pointer">Register</button>
         </div>
       </main>
     </>
