@@ -4,27 +4,31 @@ import Home from './pages/Home'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import Game from './pages/Game'
+import { AuthProvider } from './context/AuthContext'
 
 const App = () => {
-  useEffect(()=>{
+  useEffect(() => {
     document.addEventListener('keydown', (e) => {
-      if(e.key === "F11"){
+      if (e.key === "F11") {
         window.electronActionsAPI.fullscreen()
       }
-      if(e.key === "F12"){
+      if (e.key === "F12") {
         window.electronActionsAPI.devTools()
       }
     })
   })
+
   return (
-    <Router basename='/'>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/game' element={<Game />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router basename='/'>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/game' element={<Game />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   )
 }
 
