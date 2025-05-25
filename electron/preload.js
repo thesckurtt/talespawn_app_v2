@@ -6,5 +6,6 @@ contextBridge.exposeInMainWorld('electronAuthAPI', {
 })
 
 contextBridge.exposeInMainWorld('electronActionsAPI', {
-  fullscreen: () => ipcRenderer.invoke('actions-fullscreen')
+  fullscreen: () => ipcRenderer.send('actions-fullscreen'),
+  devTools: () => ipcRenderer.send('actions-devtools')
 })
