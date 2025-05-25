@@ -38,7 +38,7 @@ export class User {
 
     try {
       const [id] = await db('users').insert({ name, email, nickname, password: await bcrypt.hash(password, 10) })
-      return { error: false, user: id }
+      return { error: false, user_id: id }
     } catch (error) {
       return { error: true, message: error }
     }
