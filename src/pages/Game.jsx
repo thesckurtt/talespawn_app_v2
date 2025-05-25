@@ -1,8 +1,12 @@
 import React, { useState } from 'react'
 import logo_md from '../assets/img/logo-md.png'
 import Typewriter from 'typewriter-effect';
+import { useAuth } from '../context/AuthContext';
 
 const Game = () => {
+  const { protectedRoute } = useAuth()
+  protectedRoute()
+  
   const [isTyping, setIsTyping] = useState(false)
 
   return (
