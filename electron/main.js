@@ -42,7 +42,8 @@ ipcMain.on('actions-fullscreen', () => {
 // Autenticação via IPC
 ipcMain.handle('auth:login', async(event, data)=>{
   const response = await Auth.login(data)
-  console.log(response)
+  console.log("ipc: ", response)
+  return response
 })
 
 
