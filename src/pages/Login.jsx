@@ -1,15 +1,25 @@
 import React, { useState } from 'react'
 import logo_xxl from '../assets/img/logo-xxl.png'
 import InptGroup from '../components/InptGroup'
+import { useAuth } from '../context/AuthContext'
 
 const Login = () => {
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
-
+  const {login} = useAuth()
   const addClassInptGroup = {
     container: "w-100",
     label: "w-100",
     input: "w-100",
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault()
+    const data = {
+      email: email,
+      password: password
+    }
+    login(data)
   }
 
   return (
@@ -18,7 +28,7 @@ const Login = () => {
         <img src={logo_xxl} alt="Logo Talespawn" />
       </div>
       <div className="d-flex flex-column justify-content-center align-items-center">
-        <form action="" className="d-flex flex-column justify-content-center align-items-center">
+        <form onSubmit={(e) => handleSubmit(e)} className="d-flex flex-column justify-content-center align-items-center">
           <InptGroup addClass={addClassInptGroup} name={'email'} type={'text'} label={'Email'} value={email} handleChange={setEmail} />
           <InptGroup addClass={addClassInptGroup} name={'password'} type={'password'} label={'Password'} value={password} handleChange={setPassword} />
           <button className="btn-rpg mt-4 mb-3" type="submit">Login</button>
