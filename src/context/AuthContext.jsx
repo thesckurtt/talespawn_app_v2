@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-
+import { Navigate } from "react-router-dom";
 const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
@@ -8,6 +8,12 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem('isLoggedIn') === 'true';
   })
+  
+  function protectedRoute() {
+    if (!isLoggedIn) {
+    return <Navigate to={'/login'} replace />
+  }
+  }
 
   async function login({ email, password }) {
     const data = {
@@ -38,7 +44,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('isLoggedIn');
   }
 
-  return <AuthContext.Provider value={{ login, logout }}>
+  return <AuthContext.Provider value={{ login, logout, isLoggedIn, protectedRoute }}>
     {children}
   </AuthContext.Provider>
 }
