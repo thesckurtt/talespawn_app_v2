@@ -138,7 +138,7 @@ const Register = () => {
   useEffect(() => {
     const sound = new Audio(soundtrack)
     sound.loop = true
-    sound.volume = 0.2
+    sound.volume = 0.4
     sound.play()
   }, [])
 
