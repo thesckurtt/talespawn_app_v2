@@ -20,12 +20,11 @@ export class Auth {
   static async login({ email, password }) {
     try {
       const user = await User.getUserByEmail(email)
-
       const isValidHash = user ? await bcrypt.compare(password, user.password) : false
 
       if (isValidHash) {
         const token = jwt.sign({ user_id: user.id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN })
-        return { success: true, token: token }
+        return { success: true, token: token, user: user }
       }
 
       return { error: true }
@@ -57,7 +56,7 @@ export class Auth {
 
 // const user = {
 //   name: "dasdas",
-//   email: "testetet@gail.com",
+//   email: "testetet@gmail.com",
 //   nickname: "tetetet",
 //   password: "teste2"
 // }
