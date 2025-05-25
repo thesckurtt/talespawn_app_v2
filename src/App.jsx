@@ -5,6 +5,7 @@ import Register from './pages/Register'
 import Login from './pages/Login'
 import Game from './pages/Game'
 import { AuthProvider } from './context/AuthContext'
+import ProtectedRoute from './components/ProtectedRoute'
 
 const App = () => {
   useEffect(() => {
@@ -25,7 +26,7 @@ const App = () => {
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
-          <Route path='/game' element={<Game />} />
+          <Route path='/game' element={<ProtectedRoute><Game /></ProtectedRoute>} />
         </Routes>
       </Router>
     </AuthProvider>
