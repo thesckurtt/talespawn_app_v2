@@ -1,7 +1,9 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
+import dotenv from 'dotenv';
 import path from 'path'
 
-let mainWindow = undefined
+dotenv.config()
+let mainWindow = null
 
 const createMainWindow = () => {
   mainWindow = new BrowserWindow({
@@ -12,11 +14,12 @@ const createMainWindow = () => {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
+      enableRemoteModule: false,
       preload: path.resolve('electron/preload.js')
     }
   })
-  mainWindow.webContents.openDevTools()
   mainWindow.setMenu(null)
+  // mainWindow.webContents.openDevTools()
   // mainWindow.fullScreen = true
   mainWindow.loadURL('http://localhost:5173')
 }
@@ -29,11 +32,19 @@ app.whenReady().then(() => {
   });
 });
 
-ipcMain.handle('actions-fullscreen', () => {
+ipcMain.on('actions-fullscreen', () => {
   mainWindow.fullScreen = !mainWindow.fullScreen
 })
+// console.log(`***${typeof }***`)
+if (process.env.APP_DEBUG === "true") {
+  ipcMain.on("actions-devtools", () => {
+    console.log('ativar o devtools')
+    if (mainWindow) mainWindow.webContents.openDevTools();
+  })
+}
 
 // Sair do app quando todas as janelas forem fechadas (exceto no macOS)
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit();
 });
+
