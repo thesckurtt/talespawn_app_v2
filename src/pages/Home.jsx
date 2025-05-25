@@ -1,7 +1,9 @@
 import React from 'react'
 import bg_home from '../assets/video/bg_home.mp4'
 import logo_xxl from '../assets/img/logo-xxl.png'
+import { useNavigate } from 'react-router-dom'
 const Home = () => {
+  const navigate = useNavigate()
   return (
     <>
       <video id="background-video" autoPlay loop muted playsInline>
@@ -14,8 +16,8 @@ const Home = () => {
           <img src={logo_xxl} alt="Logo Talespawn" />
         </div>
         <div className="d-flex flex-column">
-          <button className="btn-rpg mb-3 c-pointer">Login</button>
-          <button className="btn-rpg c-pointer">Register</button>
+          <button className="btn-rpg mb-3 c-pointer" onClick={()=> navigate('/login', {replace: true})}>Login</button>
+          <button className="btn-rpg c-pointer" onClick={()=> navigate('/register', {replace: true})}>Register</button>
         </div>
       </main>
     </>
