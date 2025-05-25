@@ -11,6 +11,9 @@ const App = () => {
       if(e.key === "F11"){
         window.electronActionsAPI.fullscreen()
       }
+      if(e.key === "F12"){
+        window.electronActionsAPI.devTools()
+      }
     })
   })
   return (
