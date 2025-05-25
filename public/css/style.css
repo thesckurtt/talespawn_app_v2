@@ -100,6 +100,10 @@ video#background-video {
   /* background-image: url('../img/bg-padrao.png'); */
   background-size: cover;
 }
+.main-site-login {
+  background-image: url('../img/bg-padrao.png');
+  background-size: cover;
+}
 
 .main-site-register {
   /* background-image: url('../img/bg-register.png'); */
