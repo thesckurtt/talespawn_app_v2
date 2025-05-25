@@ -1,41 +1,69 @@
 import db from "../database/db.js";
 import Joi from "joi";
+import { Validate } from "./Validate.js";
+import bcrypt from "bcryptjs";
 
+/**
+ * Classe User responsável por gerenciar operações relacionadas aos usuários,
+ * incluindo listagem, criação e busca por email.
+ */
 export class User {
+  /**
+   * Retorna todos os usuários cadastrados no banco de dados.
+   * @returns {Promise<Array>} Lista de usuários.
+   * @throws {Error} Caso ocorra algum problema na consulta.
+   */
   static async getAllUsers() {
     try {
       return await db('users').select('*')
     } catch (error) {
-      throw new Error("Error: ", error)
+      throw new Error(`Error: ${error.message}`)
     }
   }
-  static addUser({ name, email, nickname, password }) {
-    const schema = Joi.object({
-      name: Joi.string().min(3).required(),
-      email: Joi.string().email().required(),
-      nickname: Joi.string().min(3).required(),
-      password: Joi.string().min(3).required()
-    })
 
-    const { error } = schema.validate({ name, email, nickname, password })
+  /**
+ * Cria um novo usuário após validar os dados e criptografar a senha.
+ * @param {string} name Nome do usuário.
+ * @param {string} email Email do usuário.
+ * @param {string} nickname Apelido do usuário.
+ * @param {string} password Senha em texto puro.
+ * @returns {Promise<Object>} Objeto indicando sucesso ou falha da operação.
+ * @returns {boolean} retorno.error Indica se houve erro.
+ * @returns {number} [retorno.user] ID do usuário criado (se sucesso).
+ */
+  static async addUser({ name, email, nickname, password }) {
+    const { valid } = Validate.validateUser({ name, email, nickname, password })
 
-    if (error) return { error: true }
-    
+    if (!valid) return { error: true }
+
     try {
-      db('users').insert()
+      const [id] = await db('users').insert({ name, email, nickname, password: await bcrypt.hash(password, 10) })
+      return { error: false, user: id }
     } catch (error) {
-      throw new Error("Error: ", error)
+      return { error: true, message: error }
     }
   }
 
-
+  /**
+   * Busca um usuário pelo email.
+   * @param {string} email Email do usuário a ser buscado.
+   * @returns {Promise<Object|null>} Retorna o usuário encontrado ou null.
+   * @throws {Error} Caso ocorra algum problema na consulta.
+   */
   static async getUserByEmail(email) {
     try {
       return await db('users').where('email', email).first()
     } catch (error) {
-      throw new Error("Error: ", error)
+      throw new Error(`Error: ${error.message}`)
     }
   }
 }
 
 // User.getAllUsers().then(t => console.log(t))
+// const user = {
+//   name: "rgrdewe",
+//   email: "gegee@gmai4wl.com",
+//   nickname: "egeedgeg",
+//   password: "eqweqweq"
+// }
+// User.addUser(user).then(response => console.log(response))
