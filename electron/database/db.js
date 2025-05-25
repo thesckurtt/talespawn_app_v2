@@ -6,7 +6,12 @@ const db = knex({
   connection: {
     filename: path.resolve('electron/database/data.db')
   },
-  useNullAsDefault: true
+  useNullAsDefault: true,
+  pool: {
+    afterCreate: (conn, done) => {
+      conn.run('PRAGMA journal_mode = WAL;', done); // WAL = Write-Ahead Logging
+    }
+  }
 })
 
 db.schema.hasTable('users').then(exists => {
