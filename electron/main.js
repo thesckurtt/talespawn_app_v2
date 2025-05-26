@@ -46,6 +46,12 @@ ipcMain.handle('auth:login', async(event, data)=>{
   return response
 })
 
+ipcMain.handle('auth:register', async(event, data)=>{
+  const response = await Auth.register(data)
+  console.log("ipc: ", response)
+  return response
+})
+
 
 if (process.env.APP_DEBUG === "true") {
   ipcMain.on("actions-devtools", () => {
