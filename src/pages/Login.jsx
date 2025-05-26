@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import logo_xxl from '../assets/img/logo-xxl.png'
 import InptGroup from '../components/InptGroup'
 import { useAuth } from '../context/AuthContext'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 const Login = () => {
   const [password, setPassword] = useState('')
   const [email, setEmail] = useState('')
@@ -35,12 +35,13 @@ const Login = () => {
       </div>
       <div className="d-flex flex-column justify-content-center align-items-center">
         <form onSubmit={(e) => handleSubmit(e)} className="d-flex flex-column justify-content-center align-items-center">
-          {error && <div className="alert alert-danger" style={{ marginTop: "-15px" }} role="alert">
+          {error && <div className="alert alert-danger" style={{ marginTop: "-30px" }} role="alert">
             Credênciais inválidas! Tente novamente.
           </div>}
           <InptGroup addClass={addClassInptGroup} name={'email'} type={'text'} label={'Email'} value={email} handleChange={setEmail} />
           <InptGroup addClass={addClassInptGroup} name={'password'} type={'password'} label={'Password'} value={password} handleChange={setPassword} />
-          <button className="btn-rpg mt-4 mb-3" type="submit">Login</button>
+          <span className='text-white'>Não possuí conta? <Link to={'/register'} replace className='c-pointer label-rpg'>Criar agora.</Link></span>
+          <button className="btn-rpg mt-3 mb-3" type="submit">Login</button>
         </form>
       </div>
     </main>
