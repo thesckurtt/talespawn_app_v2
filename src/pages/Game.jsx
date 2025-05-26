@@ -13,13 +13,25 @@ const Game = () => {
   protectedRoute()
 
   const [isTyping, setIsTyping] = useState(false)
-  const refSoundTrack = useRef(null)
+  const refSoundTrack = useRef(null) // Trilha sonora
+  const refSoundMaster = useRef(null) // Voz do narrador
   const [playSoundTrack, setplaySoundTrack] = useState(false)
+  const [isInitialGame, setIsInitialGame] = useState(true)
+  const [textToTypyng, setTextToTypyng] = useState('Olá olá mundo...')
+  const [delayToTypyng, setDelayToTypyng] = useState(75)
 
   useEffect(() => {
     const sound = new Audio(soundtrack)
     refSoundTrack.current = sound
+
   }, [])
+
+  useEffect(() => {
+    if (isInitialGame) {
+      setTextToTypyng('Nas profundezas de uma terra esquecida pelo tempo, heróis surgem para moldar seu destino...')
+      setDelayToTypyng(60)
+    }
+  }, [isInitialGame])
 
   useEffect(() => {
     console.log(playSoundTrack)
@@ -73,7 +85,7 @@ const Game = () => {
                 onInit={(typewriter) => {
                   setIsTyping(true)
                   typewriter
-                    .typeString("Sua aventura começa agora...")
+                    .typeString(textToTypyng)
                     .callFunction(() => {
                       // alert("terminou de digitar!")
                       setIsTyping(false)
@@ -84,7 +96,7 @@ const Game = () => {
                 options={{
                   autoStart: true,
                   loop: false,
-                  delay: 75,
+                  delay: 45,
                   cursor: '',
                 }}
               />
