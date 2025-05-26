@@ -135,7 +135,7 @@ const Register = () => {
 
     }, 600)
     return () => {
-      audioRef.current.stop()
+      audioRef.current.pause()
       audioRef.current.currentTime = 0
       clearTimeout(timeoutId)
     }
