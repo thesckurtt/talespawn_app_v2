@@ -8,11 +8,11 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem('isLoggedIn') === 'true';
   })
-  
+
   function protectedRoute() {
     if (!isLoggedIn) {
-    return <Navigate to={'/login'} replace />
-  }
+      return <Navigate to={'/login'} replace />
+    }
   }
 
   async function login({ email, password }) {
@@ -36,6 +36,23 @@ export const AuthProvider = ({ children }) => {
     return { error: true }
   }
 
+  async function register({ name, email, password, nickname, character_id }) {
+    const data = {
+      name: name,
+      email: email,
+      nickname: nickname,
+      password: password,
+      character_id: character_id
+    }
+    if (window.electronAuthAPI) {
+      const response = await window.electronAuthAPI.register(data)
+      if (!response.error) {
+        return { error: false }
+      }
+    }
+    return { error: true }
+  }
+
   function logout() {
     setUser(null);
     setToken(null);
@@ -44,7 +61,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('isLoggedIn');
   }
 
-  return <AuthContext.Provider value={{ login, logout, isLoggedIn, protectedRoute }}>
+  return <AuthContext.Provider value={{ login, register, logout, isLoggedIn, protectedRoute }}>
     {children}
   </AuthContext.Provider>
 }
