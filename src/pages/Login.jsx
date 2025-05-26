@@ -24,7 +24,7 @@ const Login = () => {
     const response = await login(data)
     console.log(response)
     if (response.error) setError(true)
-    if (response.success) navigate('/game', {replace: true})
+    if (response.success) navigate('/game', { replace: true })
 
   }
 
@@ -35,7 +35,7 @@ const Login = () => {
       </div>
       <div className="d-flex flex-column justify-content-center align-items-center">
         <form onSubmit={(e) => handleSubmit(e)} className="d-flex flex-column justify-content-center align-items-center">
-          {error && <div className="alert alert-danger fw-medium" role="alert">
+          {error && <div className="alert alert-danger" style={{ marginTop: "-15px" }} role="alert">
             Credênciais inválidas! Tente novamente.
           </div>}
           <InptGroup addClass={addClassInptGroup} name={'email'} type={'text'} label={'Email'} value={email} handleChange={setEmail} />
