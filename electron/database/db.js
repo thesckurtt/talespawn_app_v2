@@ -14,14 +14,18 @@ const db = knex({
   }
 })
 
+
+
+
 db.schema.hasTable('users').then(exists => {
   if (!exists) {
     return db.schema.createTable('users', table => {
       table.increments('id').primary()
-      table.string('name')
-      table.string('email').unique()
-      table.string('nickname').unique()
-      table.string('password')
+      table.string('name').notNullable()
+      table.string('email').unique().notNullable()
+      table.string('nickname').unique().notNullable()
+      table.string('password').notNullable()
+      // table.enum('character_id', ['1', '2', '3']).notNullable().defaultTo('1');
     })
   }
 })
