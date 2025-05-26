@@ -152,10 +152,11 @@ const Register = () => {
       email: email,
       password: password,
       nickname: nickname,
-      character_id: characterSelected.id
+      character_id: (characterSelected.id).toString()
     }
+    // console.log(data)
     const response = await register(data)
-    // console.log(response)
+    console.log(response)
     if (response.error) setError(true)
     if (!response.error) navigate('/login', { replace: true })
 
