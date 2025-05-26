@@ -42,9 +42,9 @@ export class Auth {
    * @param {string} password
    * @returns {Object} resultado do cadastro
    */
-  static async register({ name, email, nickname, password }) {
+  static async register({ name, email, nickname, password, character_id }) {
     try {
-      const user = await User.addUser({ name, email, nickname, password })
+      const user = await User.addUser({ name, email, nickname, password, character_id })
       if(user.error){
         return { error: true}
       }
