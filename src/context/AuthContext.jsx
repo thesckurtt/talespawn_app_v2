@@ -3,8 +3,17 @@ import { Navigate } from "react-router-dom";
 const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
-  const [token, setToken] = useState(null)
+  const [user, setUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('user'));
+    } catch (error) {
+      console.log(error)
+      return null
+    }
+  })
+  const [token, setToken] = useState(() => {
+    return localStorage.getItem('token');
+  })
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
     return localStorage.getItem('isLoggedIn') === 'true';
   })
@@ -27,7 +36,7 @@ export const AuthProvider = ({ children }) => {
         setUser(response.user)
         setToken(response.token)
         setIsLoggedIn(true);
-        localStorage.setItem('user', response.user);
+        localStorage.setItem('user', JSON.stringify(response.user));
         localStorage.setItem('authToken', response.token)
         localStorage.setItem('isLoggedIn', 'true');
       }
@@ -61,7 +70,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('isLoggedIn');
   }
 
-  return <AuthContext.Provider value={{ login, register, logout, isLoggedIn, protectedRoute }}>
+  return <AuthContext.Provider value={{ login, register, logout, isLoggedIn, protectedRoute, user, token }}>
     {children}
   </AuthContext.Provider>
 }
