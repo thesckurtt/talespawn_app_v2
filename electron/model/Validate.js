@@ -15,14 +15,15 @@ export class Validate {
    * @returns {boolean} retorno.valid Indica se os dados são válidos.
    * @returns {string} [retorno.message] Mensagem de erro caso inválido.
    */
-  static validateUser({ name, email, nickname, password }) {
+  static validateUser({ name, email, nickname, password,character_id }) {
     const schema = Joi.object({
       name: Joi.string().min(3).required(),
       email: Joi.string().email().required(),
       nickname: Joi.string().min(3).required(),
-      password: Joi.string().min(3).required()
+      password: Joi.string().min(3).required(),
+      character_id: Joi.string().min(1).required()
     })
-    const { error } = schema.validate({ name, email, nickname, password })
+    const { error } = schema.validate({ name, email, nickname, password, character_id })
     if (error) return { valid: false, message: error.details[0].message }
     return { valid: true }
   }
