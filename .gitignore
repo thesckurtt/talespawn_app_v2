@@ -25,7 +25,6 @@ dist-ssr
 .env
 
 
-electron\database\data.db-shm
-electron\database\data.db-wal
-electron/database/data.db-shm
-electron/database/data.db-wal
+./electron/database/data.db-shm
+./electron/database/data.db-wal
+./electron/database/data.db
