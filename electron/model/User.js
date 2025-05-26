@@ -31,13 +31,13 @@ export class User {
  * @returns {boolean} retorno.error Indica se houve erro.
  * @returns {number} [retorno.user] ID do usuário criado (se sucesso).
  */
-  static async addUser({ name, email, nickname, password }) {
-    const { valid } = Validate.validateUser({ name, email, nickname, password })
+  static async addUser({ name, email, nickname, password, character_id }) {
+    const { valid } = Validate.validateUser({ name, email, nickname, password, character_id })
 
     if (!valid) return { error: true }
 
     try {
-      const [id] = await db('users').insert({ name, email, nickname, password: await bcrypt.hash(password, 10) })
+      const [id] = await db('users').insert({ name, email, nickname, password: await bcrypt.hash(password, 10), character_id })
       return { error: false, user_id: id }
     } catch (error) {
       return { error: true, message: error }
