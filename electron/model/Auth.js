@@ -45,6 +45,9 @@ export class Auth {
   static async register({ name, email, nickname, password }) {
     try {
       const user = await User.addUser({ name, email, nickname, password })
+      if(user.error){
+        return { error: true}
+      }
       console.log(user)
       return { error: false, user_id: user.user_id }
     } catch (error) {
