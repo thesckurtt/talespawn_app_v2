@@ -134,7 +134,11 @@ const Register = () => {
       audioRef.current = sound
 
     }, 600)
-    return () => clearTimeout(timeoutId)
+    return () => {
+      audioRef.current.stop()
+      audioRef.current.currentTime = 0
+      clearTimeout(timeoutId)
+    }
 
   }, [characterSelected])
 
@@ -143,6 +147,11 @@ const Register = () => {
     sound.loop = true
     sound.volume = 0.4
     sound.play()
+    // soundTrack.current = sound
+    return () => {
+      sound.pause()
+      sound.currentTime = 0
+    }
   }, [])
 
   async function handleSubmit(e) {
