@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
@@ -249,8 +249,9 @@ const Register = () => {
           </div>
         </div>
 
-        <div className="main-site-register-bottom d-flex justify-content-center align-items-center p-3">
+        <div className="main-site-register-bottom d-flex justify-content-center align-items-center px-3 flex-column">
           <button className="btn-rpg" onClick={handleFormSubmitClick}>Registrar</button>
+          <span className='text-white'>Já possuí conta? <Link to={'/login'} replace className='c-pointer label-rpg'>Entrar agora.</Link></span>
         </div>
       </main>
     </>
