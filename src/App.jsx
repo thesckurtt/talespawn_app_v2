@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import Game from './pages/Game'
 import { AuthProvider } from './context/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
+import Logout from './components/Logout'
 
 const App = () => {
   useEffect(() => {
@@ -27,6 +28,7 @@ const App = () => {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/game' element={<ProtectedRoute><Game /></ProtectedRoute>} />
+          <Route path='/logout' element={<ProtectedRoute><Logout /></ProtectedRoute>} />
         </Routes>
       </Router>
     </AuthProvider>
