@@ -1,5 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Aclonica&display=swap');
 
+/* Alvo apenas navegadores WebKit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 6px;         /* largura da barra vertical */
+  height: 6px;        /* altura da barra horizontal (se houver) */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;  /* fundo da trilha da barra */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);  /* cor do "botão" da barra */
+  border-radius: 4px;                    /* cantos arredondados */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.5);  /* cor ao passar o mouse */
+}
+
 * {
   box-sizing: border-box;
 }
