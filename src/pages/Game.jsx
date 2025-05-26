@@ -4,9 +4,11 @@ import Typewriter from 'typewriter-effect';
 import { useAuth } from '../context/AuthContext';
 
 const Game = () => {
-  const { protectedRoute } = useAuth()
+  const { protectedRoute, user } = useAuth()
+  console.log(user.name)
+
   protectedRoute()
-  
+
   const [isTyping, setIsTyping] = useState(false)
 
   return (
@@ -69,7 +71,7 @@ const Game = () => {
             <div className="rpg-profile-picture">
               <img src="./img/rpg-master.jpg" alt="" />
             </div>
-            <h1 className="rpg-text-title fs-3 mt-3">Lorem Ipsum</h1>
+            <h1 className="rpg-text-title fs-3 mt-3">{user.nickname}</h1>
             <p className="text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum culpa
               molestiae ratione dolorem modi itaque amet facilis vero nisi.</p>
           </div>
