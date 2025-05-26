@@ -1,17 +1,43 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import logo_md from '../assets/img/logo-md.png'
 import Typewriter from 'typewriter-effect';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import soundtrack from '../assets/audio/soundtrack_action.mp3'
 
 const Game = () => {
   const { protectedRoute, user } = useAuth()
   const navigate = useNavigate()
-  console.log(user.name)
+  // console.log(user.name)
 
   protectedRoute()
 
   const [isTyping, setIsTyping] = useState(false)
+  const refSoundTrack = useRef(null)
+  const [playSoundTrack, setplaySoundTrack] = useState(false)
+
+  useEffect(() => {
+    const sound = new Audio(soundtrack)
+    refSoundTrack.current = sound
+  }, [])
+
+  useEffect(() => {
+    console.log(playSoundTrack)
+    if (refSoundTrack.current) {
+      if (playSoundTrack) {
+        refSoundTrack.current.play()
+      } else {
+        refSoundTrack.current.pause()
+      }
+    }
+    return () => {
+      if (refSoundTrack.current) {
+        if (playSoundTrack) {
+          refSoundTrack.current.pause()
+        }
+      }
+    }
+  }, [playSoundTrack])
 
   return (
     <main className="main-site-chat vh-100 vw-100">
@@ -21,7 +47,7 @@ const Game = () => {
         </div>
         <div>
           <i className="fa-solid fa-circle-info fs-3 color-gold c-pointer"></i>
-          <i className="fa-solid fa-music fs-3 mx-4 color-gold c-pointer"></i>
+          <i onClick={() => setplaySoundTrack((old) => !old)} className={`fa-solid fa-music ${playSoundTrack ? '' : 'inactive'} fs-3 mx-4 color-gold c-pointer`}></i>
           <i onClick={() => { navigate('/logout', { replace: true }) }} className="fa-solid fa-right-from-bracket fs-3 color-gold c-pointer"></i>
         </div>
       </div>
