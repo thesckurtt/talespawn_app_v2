@@ -176,6 +176,10 @@ video#background-video {
   font-style: normal;
 }
 
+.fa-music.inactive, .color-gold.inactive{
+  color: #ac8228c9 !important;
+}
+
 .inpt-rpg:focus {
   outline: none;
 }
