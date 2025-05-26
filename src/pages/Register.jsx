@@ -18,6 +18,7 @@ import main_audio_character_3 from '../assets/audio/aud_3.mp3'
 import main_audio_character_4 from '../assets/audio/aud_4.mp3'
 
 import soundtrack from '../assets/audio/soundtrack_action.mp3'
+import { useAuth } from '../context/AuthContext';
 
 const characters = [
   {
@@ -82,7 +83,7 @@ const Register = () => {
   const formRef = useRef(null)
   const videoRef = useRef(null)
   const audioRef = useRef(null)
-
+  const { register } = useAuth()
   const [characterSelectedIndex, setCharacterSelectedIndex] = useState(0)
   const [characterSelected, setCharacterSelected] = useState(characters[0])
 
@@ -91,6 +92,8 @@ const Register = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [nickname, setNickname] = useState('')
+
+  const [error, setError] = useState(null)
 
   // useEffect para carregar o Swiper
   useEffect(() => {
@@ -142,6 +145,24 @@ const Register = () => {
     sound.play()
   }, [])
 
+  async function handleSubmit(e) {
+    e.preventDefault()
+    const data = {
+      name: name,
+      email: email,
+      password: password,
+      nickname: nickname,
+      character_id: characterSelected.id
+    }
+    const response = await register(data)
+    // console.log(response)
+    if (response.error) setError(true)
+    if (!response.error) navigate('/login', { replace: true })
+
+  }
+  function handleFormSubmitClick() {
+    if (formRef.current) formRef.current.requestSubmit()
+  }
   return (
     <>
       <video ref={videoRef} id="background-video" autoPlay loop muted playsInline>
@@ -159,7 +180,7 @@ const Register = () => {
 
         <div className="main-site-register-middle">
           <div className="right-border d-flex justify-content-center align-items-center">
-            <form action="#" className="rpg-form" ref={formRef}>
+            <form onSubmit={(e) => handleSubmit(e)} className="rpg-form" ref={formRef}>
               <InptGroup name={'name'} type={'text'} label={'Nome'} value={name} handleChange={setName} />
               <InptGroup name={'email'} type={'email'} label={'E-mail'} value={email} handleChange={setEmail} />
               <InptGroup name={'password'} type={'password'} label={'Senha'} value={password} handleChange={setPassword} />
@@ -228,7 +249,7 @@ const Register = () => {
         </div>
 
         <div className="main-site-register-bottom d-flex justify-content-center align-items-center p-3">
-          <button className="btn-rpg">Registrar</button>
+          <button className="btn-rpg" onClick={handleFormSubmitClick}>Registrar</button>
         </div>
       </main>
     </>
