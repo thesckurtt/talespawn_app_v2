@@ -13,6 +13,7 @@ const Game = () => {
 
   protectedRoute()
 
+  const { token } = useAuth();
   const [isTyping, setIsTyping] = useState(false)
   const refSoundTrack = useRef(null) // Trilha sonora
   const refSoundMaster = useRef(null) // Voz do narrador
@@ -29,7 +30,8 @@ const Game = () => {
 
   useEffect(() => {
     if (isInitialGame) {
-      setTextToTypyng('Nas profundezas de uma terra esquecida pelo tempo, heróis surgem para moldar seu destino...')
+      setTextToTypyng('.')
+      // setTextToTypyng('Nas profundezas de uma terra esquecida pelo tempo, heróis surgem para moldar seu destino...')
       setDelayToTypyng(60)
     }
   }, [isInitialGame])
@@ -52,6 +54,10 @@ const Game = () => {
     }
   }, [playSoundTrack])
 
+
+  // function testIPC() {
+
+  // }
   return (
     <main className="main-site-chat vh-100 vw-100">
       <div className="header-site-chat d-flex justify-content-between align-items-center">
@@ -70,22 +76,15 @@ const Game = () => {
             <div className="rpg-profile-picture">
               <img src="./img/rpg-master.jpg" alt="" />
             </div>
-            {/* <div className="rpg-master-text">
-              <p className="fs-5">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorum quasi ipsam cumque
-                excepturi eum repudiandae provident. Voluptatum eveniet sint, dolores maiores qui culpa odit quas eligendi
-                in nobis provident blanditiis.<br /><br />
-
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum culpa molestiae ratione
-                dolorem modi itaque amet facilis vero nisi.<br /><br />
-
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum culpa molestiae ratione
-                dolorem modi itaque amet facilis vero nisi.</p>
-            </div> */}
-            <RPGMasterText setIsTyping={setIsTyping} textToTypyng={textToTypyng}/>
-            {/* Rpg Master */}
+            <RPGMasterText setIsTyping={setIsTyping} textToTypyng={textToTypyng} />
           </div>
           {!isTyping && <div className="d-flex justify-content-around align-items-center">
-            <button className="btn-rpg">Opção 1</button>
+            <button className="btn-rpg" onClick={async () => {
+              const response = await window.electronUserAPI.isNewUser({ token });
+              console.log(response);
+            }}>
+              Opção 1
+            </button>
             <button className="btn-rpg">Opção 2</button>
           </div>}
         </div>
