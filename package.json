@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "vite": "vite",
-    "dev": "concurrently -k \"npm:vite\" \"npm:electron\" ",
+    "app": "concurrently -k \"npm:vite\" \"npm:electron\" ",
     "build": "vite build",
     "lint": "eslint .",
     "electron": "electron .",
