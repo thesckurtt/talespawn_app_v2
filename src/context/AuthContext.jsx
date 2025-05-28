@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 const AuthContext = createContext()
 
@@ -36,9 +36,9 @@ export const AuthProvider = ({ children }) => {
         setUser(response.user)
         setToken(response.token)
         setIsLoggedIn(true);
-        localStorage.setItem('user', JSON.stringify(response.user));
-        localStorage.setItem('authToken', response.token)
-        localStorage.setItem('isLoggedIn', 'true');
+        // localStorage.setItem('user', JSON.stringify(response.user));
+        // localStorage.setItem('authToken', response.token)
+        // localStorage.setItem('isLoggedIn', 'true');
       }
       return response
     }
@@ -62,12 +62,36 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user))
+    } else {
+      localStorage.removeItem('user')
+    }
+  }, [user])
+
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem('token', token)
+    } else {
+      localStorage.removeItem('token')
+    }
+  }, [token])
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      localStorage.setItem('isLoggedIn', 'true')
+    } else {
+      localStorage.removeItem('isLoggedIn')
+    }
+  }, [isLoggedIn])
+
   function logout() {
     setUser(null);
     setToken(null);
     setIsLoggedIn(false);
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('isLoggedIn');
+    // localStorage.removeItem('authToken');
+    // localStorage.removeItem('isLoggedIn');
   }
 
   return <AuthContext.Provider value={{ login, register, logout, isLoggedIn, protectedRoute, user, token }}>
