@@ -10,7 +10,10 @@
     "build": "vite build",
     "lint": "eslint .",
     "electron": "electron .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "knex:migrate:latest" : "npx knex migrate:latest --knexfile electron/database/knexfile.cjs",
+    "knex:seed:run" : "npx knex seed:run --knexfile electron/database/knexfile.cjs",
+    "knex:migrate:rollback-all" : "npx knex migrate:rollback --all --knexfile electron/database/knexfile.cjs"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
