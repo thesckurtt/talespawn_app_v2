@@ -34,14 +34,14 @@ export class User {
   static async addUser({ name, email, nickname, password, character_id }) {
     const { valid, message } = Validate.validateUser({ name, email, nickname, password, character_id })
 
-    if (!valid){ 
+    if (!valid) {
       // console.log(valid, message)
       return { error: true, message: message }
     }
 
     const isEmailAlreadyRegistered = await db('users').where('email', email).first() ? true : false
 
-    if(isEmailAlreadyRegistered) return { error: true, message: "Email already registered" }
+    if (isEmailAlreadyRegistered) return { error: true, message: "Email already registered" }
 
     try {
       const [id] = await db('users').insert({ name, email, nickname, password: await bcrypt.hash(password, 10), character_id })
@@ -63,6 +63,20 @@ export class User {
     } catch (error) {
       throw new Error(`Error: ${error.message}`)
     }
+  }
+
+  static async isNewUser(id) {
+    try {
+      const user = await db('users').where('id', id).first()
+      if (!user) return { error: true, message: "User not found!" }
+      if (user.new_user) {
+        return { error: false, isNewUser: true }
+      }
+      return { error: false, isNewUser: false }
+    } catch (error) {
+      return { error: true, message: `[User]: ${error.message || "Unexpected error!"}` }
+    }
+
   }
 }
 
