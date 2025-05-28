@@ -6,6 +6,7 @@ exports.up = function (knex) {
         table.increments('id').primary()
         table.string('name').notNullable()
         table.string('email').unique().notNullable()
+        table.boolean('new_user').notNullable().defaultTo(true)
         table.string('nickname').unique().notNullable()
         table.string('password').notNullable()
 
