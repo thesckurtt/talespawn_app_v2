@@ -18,6 +18,12 @@ export const AuthProvider = ({ children }) => {
     return localStorage.getItem('isLoggedIn') === 'true';
   })
 
+  // const [isNewUser, setIsNewUser] = useState(async () => {
+  //   const response = await window.electronUserAPI.isNewUser({token})
+  //   // console.log(!response?.error )
+  //   console.log(response)
+  // })
+
   function protectedRoute() {
     if (!isLoggedIn) {
       return <Navigate to={'/login'} replace />
