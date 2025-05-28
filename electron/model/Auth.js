@@ -46,7 +46,7 @@ export class Auth {
     try {
       const user = await User.addUser({ name, email, nickname, password, character_id })
       if(user.error){
-        return { error: true}
+        return { error: true, message: user.message}
       }
       console.log(user)
       return { error: false, user_id: user.user_id }
