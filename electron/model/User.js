@@ -39,11 +39,15 @@ export class User {
       return { error: true, message: message }
     }
 
+    const isEmailAlreadyRegistered = await db('users').where('email', email).first() ? true : false
+
+    if(isEmailAlreadyRegistered) return { error: true, message: "Email already registered" }
+
     try {
       const [id] = await db('users').insert({ name, email, nickname, password: await bcrypt.hash(password, 10), character_id })
       return { error: false, user_id: id }
     } catch (error) {
-      return { error: true, message: error }
+      return { error: true, message: `[User]: ${error.message || 'Unexpected error!'}` }
     }
   }
 
