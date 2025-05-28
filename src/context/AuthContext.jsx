@@ -46,20 +46,20 @@ export const AuthProvider = ({ children }) => {
   }
 
   async function register({ name, email, password, nickname, character_id }) {
-    const data = {
-      name: name,
-      email: email,
-      nickname: nickname,
-      password: password,
-      character_id: character_id
+    if (!window.electronAuthAPI) {
+      return { error: true, message: "Electron Auth API not Loaded!" }
     }
-    if (window.electronAuthAPI) {
-      const response = await window.electronAuthAPI.register(data)
+
+    try {
+      const response = await window.electronAuthAPI.register({ name, email, password, nickname, character_id })
       if (!response.error) {
         return { error: false }
       }
+      return { error: true, message: response.message }
+    } catch (error) {
+      return { error: true, message: `[AuthContext]: ${error.message || "Unexpected error"}` }
+
     }
-    return { error: true }
   }
 
   function logout() {
