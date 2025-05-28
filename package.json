@@ -7,13 +7,14 @@
   "scripts": {
     "vite": "vite",
     "app": "concurrently -k \"npm:vite\" \"npm:electron\" ",
+    "nodemon:app": "nodemon --watch . --ext js --exec \"npm run app\"",
     "build": "vite build",
     "lint": "eslint .",
     "electron": "electron .",
     "preview": "vite preview",
-    "knex:migrate:latest" : "npx knex migrate:latest --knexfile electron/database/knexfile.cjs",
-    "knex:seed:run" : "npx knex seed:run --knexfile electron/database/knexfile.cjs",
-    "knex:migrate:rollback-all" : "npx knex migrate:rollback --all --knexfile electron/database/knexfile.cjs"
+    "knex:migrate:latest": "npx knex migrate:latest --knexfile electron/database/knexfile.cjs",
+    "knex:seed:run": "npx knex seed:run --knexfile electron/database/knexfile.cjs",
+    "knex:migrate:rollback-all": "npx knex migrate:rollback --all --knexfile electron/database/knexfile.cjs"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
@@ -39,6 +40,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
+    "nodemon": "^3.1.10",
     "vite": "^6.3.5"
   }
 }
