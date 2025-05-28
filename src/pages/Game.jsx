@@ -4,6 +4,7 @@ import Typewriter from 'typewriter-effect';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import soundtrack from '../assets/audio/soundtrack_action.mp3'
+import RPGMasterText from '../components/RPGMasterText';
 
 const Game = () => {
   const { protectedRoute, user } = useAuth()
@@ -80,27 +81,8 @@ const Game = () => {
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium nostrum culpa molestiae ratione
                 dolorem modi itaque amet facilis vero nisi.</p>
             </div> */}
-            <div className="rpg-master-text fs-5">
-              <Typewriter
-                onInit={(typewriter) => {
-                  setIsTyping(true)
-                  typewriter
-                    .typeString(textToTypyng)
-                    .callFunction(() => {
-                      // alert("terminou de digitar!")
-                      setIsTyping(false)
-                    })
-                    .start();
-                }}
-
-                options={{
-                  autoStart: true,
-                  loop: false,
-                  delay: 45,
-                  cursor: '',
-                }}
-              />
-            </div>
+            <RPGMasterText setIsTyping={setIsTyping} textToTypyng={textToTypyng}/>
+            {/* Rpg Master */}
           </div>
           {!isTyping && <div className="d-flex justify-content-around align-items-center">
             <button className="btn-rpg">Opção 1</button>
