@@ -3,7 +3,9 @@ import dotenv from 'dotenv';
 import path from 'path'
 import { User } from './model/User.js';
 import { Auth } from './model/Auth.js';
+import IPCMiddleware from './middleware/IPCMiddleware.cjs';
 dotenv.config()
+
 let mainWindow = null
 
 const createMainWindow = () => {
@@ -27,7 +29,7 @@ const createMainWindow = () => {
 
 app.whenReady().then(() => {
   createMainWindow();
-  
+
   // User.getAllUsers().then(result => console.log(result))
 
   app.on('activate', function () {
@@ -40,17 +42,30 @@ ipcMain.on('actions-fullscreen', () => {
 })
 
 // Autenticação via IPC
-ipcMain.handle('auth:login', async(event, data)=>{
+ipcMain.handle('auth:login', async (event, data) => {
   const response = await Auth.login(data)
-  console.log("ipc: ", response)
+  // console.log("ipc: ", response)
   return response
 })
 
-ipcMain.handle('auth:register', async(event, data)=>{
+ipcMain.handle('auth:register', async (event, data) => {
   const response = await Auth.register(data)
   console.log("ipc: ", response)
   return response
 })
+
+// User API
+ipcMain.handle('user:isNewUser', IPCMiddleware(async (event, args) => {
+  try {
+    if (!args.error && args.jwt) {
+      const response = await User.isNewUser(args.jwt.user_id)
+      return { error: false, isNewUser: response.isNewUser }
+    }
+    return { error: true }
+  } catch (error) {
+    return { error: true, message: `[IPC user:isNewUser]: ${error.message || "Unexpected error"}` }
+  }
+}))
 
 
 if (process.env.APP_DEBUG === "true") {
