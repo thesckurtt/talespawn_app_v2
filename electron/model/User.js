@@ -32,9 +32,12 @@ export class User {
  * @returns {number} [retorno.user] ID do usuário criado (se sucesso).
  */
   static async addUser({ name, email, nickname, password, character_id }) {
-    const { valid } = Validate.validateUser({ name, email, nickname, password, character_id })
+    const { valid, message } = Validate.validateUser({ name, email, nickname, password, character_id })
 
-    if (!valid) return { error: true }
+    if (!valid){ 
+      // console.log(valid, message)
+      return { error: true, message: message }
+    }
 
     try {
       const [id] = await db('users').insert({ name, email, nickname, password: await bcrypt.hash(password, 10), character_id })
