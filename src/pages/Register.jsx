@@ -157,12 +157,14 @@ const Register = () => {
   useEffect(()=>{
     setErrorMessage(null)
   }, [name, email, password, nickname])
+
   async function handleSubmit(e) {
     e.preventDefault()
   
     const response = await register({ name, email, password, nickname, character_id: (characterSelected.id).toString() })
     console.log(response)
     if (response.error) setErrorMessage(response.message)
+    // console.log(response)
     if (!response.error) navigate('/login', { replace: true })
 
   }
