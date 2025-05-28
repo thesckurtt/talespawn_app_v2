@@ -93,7 +93,7 @@ const Register = () => {
   const [password, setPassword] = useState('')
   const [nickname, setNickname] = useState('')
 
-  const [error, setError] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null)
 
   // useEffect para carregar o Swiper
   useEffect(() => {
@@ -154,19 +154,15 @@ const Register = () => {
     }
   }, [])
 
+  useEffect(()=>{
+    setErrorMessage(null)
+  }, [name, email, password, nickname])
   async function handleSubmit(e) {
     e.preventDefault()
-    const data = {
-      name: name,
-      email: email,
-      password: password,
-      nickname: nickname,
-      character_id: (characterSelected.id).toString()
-    }
-    // console.log(data)
-    const response = await register(data)
+  
+    const response = await register({ name, email, password, nickname, character_id: (characterSelected.id).toString() })
     console.log(response)
-    if (response.error) setError(true)
+    if (response.error) setErrorMessage(response.message)
     if (!response.error) navigate('/login', { replace: true })
 
   }
@@ -189,8 +185,12 @@ const Register = () => {
         </div>
 
         <div className="main-site-register-middle">
-          <div className="right-border d-flex justify-content-center align-items-center">
+          <div className="right-border d-flex flex-column justify-content-center align-items-center">
+            <span className='p-2 text-white text-center fst-italic'>
+              {errorMessage}
+            </span>
             <form onSubmit={(e) => handleSubmit(e)} className="rpg-form" ref={formRef}>
+
               <InptGroup name={'name'} type={'text'} label={'Nome'} value={name} handleChange={setName} />
               <InptGroup name={'email'} type={'email'} label={'E-mail'} value={email} handleChange={setEmail} />
               <InptGroup name={'password'} type={'password'} label={'Senha'} value={password} handleChange={setPassword} />
