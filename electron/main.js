@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, ipcMain, Menu } from 'electron'
 import dotenv from 'dotenv';
 import path from 'path'
 import { User } from './model/User.js';
@@ -24,6 +24,24 @@ const createMainWindow = () => {
   mainWindow.setMenu(null)
   // mainWindow.webContents.openDevTools()
   // mainWindow.fullScreen = true
+  if (process.env.APP_DEBUG === "true") {
+    const template = [
+      {
+        label: 'React',
+        submenu: [
+          { role: 'reload', label: 'Recarregar' },
+          { role: 'forcereload', label: 'Forçar Recarregamento' },
+          { type: 'separator' },
+          { role: 'back', label: 'Voltar' },
+          { role: 'forward', label: 'Avançar' },
+          { type: 'separator' },
+          { role: 'quit', label: 'Sair' },
+        ]
+      }
+    ];
+    const menu = Menu.buildFromTemplate(template);
+    Menu.setApplicationMenu(menu);
+  }
   mainWindow.loadURL('http://localhost:5173')
 }
 
