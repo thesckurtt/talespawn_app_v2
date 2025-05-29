@@ -1,14 +1,15 @@
 import React from 'react'
 import Typewriter from 'typewriter-effect';
 
-const RPGMasterText = ({setIsTyping, textToTypyng }) => {
+const RPGMasterText = ({setIsTyping, textToTyping }) => {
   return (
     <div className="rpg-master-text fs-5">
       <Typewriter
+      key={textToTyping}
         onInit={(typewriter) => {
           setIsTyping(true)
           typewriter
-            .typeString(textToTypyng)
+            .typeString(textToTyping)
             .callFunction(() => {
               // alert("terminou de digitar!")
               setIsTyping(false)
