@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import logo_md from '../assets/img/logo-md.png'
-import Typewriter from 'typewriter-effect';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import soundtrack from '../assets/audio/soundtrack_action.mp3'
 import RPGMasterText from '../components/RPGMasterText';
+import { BtnRPG } from '../components/BtnRPG';
 
 const Game = () => {
   const { protectedRoute, user } = useAuth()
@@ -30,14 +30,15 @@ const Game = () => {
 
   useEffect(() => {
     if (isInitialGame) {
-      setTextToTypyng('.')
-      // setTextToTypyng('Nas profundezas de uma terra esquecida pelo tempo, heróis surgem para moldar seu destino...')
+      // setTextToTypyng('.')
+      setTextToTypyng('Nas profundezas de uma terra esquecida pelo tempo, heróis surgem para moldar seu destino...')
       setDelayToTypyng(60)
     }
   }, [isInitialGame])
 
+  // UseEffect para controlar a soundtrack 
   useEffect(() => {
-    console.log(playSoundTrack)
+    // console.log(playSoundTrack)
     if (refSoundTrack.current) {
       if (playSoundTrack) {
         refSoundTrack.current.play()
@@ -54,10 +55,6 @@ const Game = () => {
     }
   }, [playSoundTrack])
 
-
-  // function testIPC() {
-
-  // }
   return (
     <main className="main-site-chat vh-100 vw-100">
       <div className="header-site-chat d-flex justify-content-between align-items-center">
@@ -78,14 +75,8 @@ const Game = () => {
             </div>
             <RPGMasterText setIsTyping={setIsTyping} textToTypyng={textToTypyng} />
           </div>
-          {!isTyping && <div className="d-flex justify-content-around align-items-center">
-            <button className="btn-rpg" onClick={async () => {
-              const response = await window.electronUserAPI.isNewUser({ token });
-              console.log(response);
-            }}>
-              Opção 1
-            </button>
-            <button className="btn-rpg">Opção 2</button>
+          {!isTyping && isInitialGame && <div className="d-flex justify-content-around align-items-center">
+            <BtnRPG label={'iniciar Jornada'}/>
           </div>}
         </div>
         <div className="right-middle-chat">
