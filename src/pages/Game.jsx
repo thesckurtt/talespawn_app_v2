@@ -19,9 +19,9 @@ const Game = () => {
   const refSoundMaster = useRef(null) // Voz do narrador
   const [playSoundTrack, setplaySoundTrack] = useState(false)
   const [isInitialGame, setIsInitialGame] = useState(true)
-  const [textToTypyng, setTextToTypyng] = useState('Olá olá mundo...')
-  const [delayToTypyng, setDelayToTypyng] = useState(75)
-
+  const [textToTyping, setTextToTyping] = useState('Olá olá mundo...')
+  const [delayToTyping, setDelayToTyping] = useState(75)
+  const [controlButton, setControlButton] = useState('Iniciar Jornada')
   useEffect(() => {
     const sound = new Audio(soundtrack)
     refSoundTrack.current = sound
@@ -30,9 +30,9 @@ const Game = () => {
 
   useEffect(() => {
     if (isInitialGame) {
-      // setTextToTypyng('.')
-      setTextToTypyng('Nas profundezas de uma terra esquecida pelo tempo, heróis surgem para moldar seu destino...')
-      setDelayToTypyng(60)
+      // setTextToTyping('.')
+      setTextToTyping('Nas profundezas de uma terra esquecida pelo tempo, heróis surgem para moldar seu destino...')
+      setDelayToTyping(60)
     }
   }, [isInitialGame])
 
@@ -55,6 +55,17 @@ const Game = () => {
     }
   }, [playSoundTrack])
 
+  function handleStartGame() {
+    // setIsInitialGame(false)
+    console.log('Iniciando a jornada...')
+    setTextToTyping('A jornada começa agora, herói. Prepare-se para enfrentar desafios e descobrir segredos...')
+    setControlButton('Continuar')
+    setDelayToTyping(50)
+  }
+
+  // UseEffect para controlar a voz do narrador
+  // TODO: Implementar a lógica para a voz do narrador
+
   return (
     <main className="main-site-chat vh-100 vw-100">
       <div className="header-site-chat d-flex justify-content-between align-items-center">
@@ -73,10 +84,10 @@ const Game = () => {
             <div className="rpg-profile-picture">
               <img src="./img/rpg-master.jpg" alt="" />
             </div>
-            <RPGMasterText setIsTyping={setIsTyping} textToTypyng={textToTypyng} />
+            <RPGMasterText setIsTyping={setIsTyping} textToTyping={textToTyping} />
           </div>
-          {!isTyping && isInitialGame && <div className="d-flex justify-content-around align-items-center">
-            <BtnRPG label={'iniciar Jornada'}/>
+          {!isTyping && <div className="d-flex justify-content-around align-items-center">
+            <BtnRPG label={controlButton} handleClick={handleStartGame}/>
           </div>}
         </div>
         <div className="right-middle-chat">
