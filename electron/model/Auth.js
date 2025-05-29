@@ -7,8 +7,6 @@ import Joi from "joi";
 import { Validate } from "./Validate.js";
 dotenv.config()
 
-
-
 export class Auth {
   /**
    * Realiza login de usuário verificando email e senha.
@@ -21,7 +19,7 @@ export class Auth {
     try {
       const user = await User.getUserByEmail(email)
       const isValidHash = user ? await bcrypt.compare(password, user.password) : false
-
+      console.log(isValidHash, user)
       if (isValidHash) {
         const token = jwt.sign({ user_id: user.id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN })
         return { success: true, token: token, user: user }
