@@ -21,7 +21,7 @@ const Game = () => {
   const [isInitialGame, setIsInitialGame] = useState(true);
   const [textToTyping, setTextToTyping] = useState("");
   const [delayToTyping, setDelayToTyping] = useState(75);
-  const [controlButton, setControlButton] = useState({});
+  const [controlButton, setControlButton] = useState([]);
   useEffect(() => {
     const sound = new Audio(soundtrack);
     refSoundTrack.current = sound;
@@ -33,10 +33,10 @@ const Game = () => {
       setTextToTyping(
         "Nas profundezas de uma terra esquecida pelo tempo, heróis surgem para moldar seu destino..."
       );
-      setControlButton({
+      setControlButton([{
         label: "Iniciar a jornada",
         handleClick: handleStartGame,
-      });
+      }]);
       setDelayToTyping(60);
     }
   }, [isInitialGame]);
@@ -69,7 +69,7 @@ const Game = () => {
     setTextToTyping(
       "Em um mundo..."
     );
-    setControlButton({label: "Continuar", handleClick: handlePromptGame});
+    setControlButton([{ label: "Continuar", handleClick: handlePromptGame }, { label: "Continuar", handleClick: handlePromptGame }]);
     setDelayToTyping(10);
   }
 
@@ -90,9 +90,8 @@ const Game = () => {
           <i className="fa-solid fa-circle-info fs-3 color-gold c-pointer"></i>
           <i
             onClick={() => setplaySoundTrack((old) => !old)}
-            className={`fa-solid fa-music ${
-              playSoundTrack ? "" : "inactive"
-            } fs-3 mx-4 color-gold c-pointer`}
+            className={`fa-solid fa-music ${playSoundTrack ? "" : "inactive"
+              } fs-3 mx-4 color-gold c-pointer`}
           ></i>
           <i
             onClick={() => {
@@ -114,10 +113,15 @@ const Game = () => {
             />
           </div>
           {!isTyping && (
-            <div className="d-flex justify-content-around align-items-center">
-              <BtnRPG label={controlButton.label} handleClick={controlButton.handleClick} />
+            <div className="d-flex justify-content-around align-items-center flex-direction-row">
+              {controlButton.map(btn => {
+                return (
+                  <BtnRPG label={btn.label} handleClick={btn.handleClick} />
+                )
+              })}
             </div>
           )}
+
         </div>
         <div className="right-middle-chat">
           <div className="character-info d-flex flex-column p-3 text-center justify-content-center align-items-center">
