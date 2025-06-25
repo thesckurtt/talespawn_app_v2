@@ -66,6 +66,9 @@ const Game = () => {
     // setTextToTyping(
     //   "Em um mundo onde antigas fortalezas em ruínas marcam os limites de reinos esquecidos, e florestas densas ocultam criaturas lendárias, o equilíbrio entre os homens e as forças da natureza começa a ruir. Povoados isolados vivem sob a constante ameaça de bandidos, feras e poderes arcanos há muito adormecidos, enquanto reis travam guerras silenciosas por territórios e influência. É nesse cenário de incerteza, onde a coragem vale mais que o ouro e alianças são tão frágeis quanto a lâmina de uma espada, que sua jornada se inicia."
     // );
+
+
+    
     setTextToTyping(
       "Em um mundo..."
     );
