@@ -13,6 +13,7 @@ export class Game {
       };
     }
   }
+
   static async saveContext({
     option_chosen,
     option_declined,
@@ -30,6 +31,24 @@ export class Game {
         return { error: true, message: "Failed to save context" };
       }
       return { error: false, message: "Context saved successfully" };
+    } catch (error) {
+      return {
+        error: true,
+        message: `[Game]: ${error.message || "Unexpected error!"}`,
+      };
+    }
+  }
+
+  static async savePrompt(user_id, prompt){
+    try {
+      const response = await db("prompts").insert({
+        user_id,
+        prompt
+      });
+      if (!response) {
+        return { error: true, message: "Failed to save prompt" };
+      }
+      return { error: false, message: "Prompt saved successfully" };
     } catch (error) {
       return {
         error: true,
