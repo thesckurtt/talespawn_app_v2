@@ -28,4 +28,4 @@ dist-ssr
 electron/database/data.db
 electron/database/data.db-shm
 electron/database/data.db-wal
-.env.example
+
