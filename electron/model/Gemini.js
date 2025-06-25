@@ -6,7 +6,6 @@ dotenv.config();
 export class Gemini {
   static API_KEY = process.env.GEMINI_API_KEY;
   static AI = new GoogleGenAI({ apiKey: Gemini.API_KEY });
-
   static async initialGamePrompt() {
     const response = await Gemini.AI.models.generateContent({
       model: "gemini-2.5-flash",
