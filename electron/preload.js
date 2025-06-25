@@ -13,3 +13,10 @@ contextBridge.exposeInMainWorld('electronActionsAPI', {
   fullscreen: () => ipcRenderer.send('actions-fullscreen'),
   devTools: () => ipcRenderer.send('actions-devtools')
 })
+
+contextBridge.exposeInMainWorld('electronGameActions', {
+
+  initialGame: () => ipcRenderer.invoke('game:initialGame'), // Usado para iniciar o jogo e gerar o primeiro prompt
+  sendOption: (args) => ipcRenderer.invoke('game:sendOption', args), // Usado para enviar a opção escolhida pelo jogador
+  getUserOptions: () => ipcRenderer.invoke('game:getUserOptions'), // Usado para obter as opções do jogador para montar o histórico
+})
