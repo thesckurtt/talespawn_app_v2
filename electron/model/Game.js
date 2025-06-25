@@ -1,7 +1,18 @@
 import db from "../database/db.js";
 
 export class Game {
-  static async getContext() {}
+  static async getAllContexts(user_id) {
+    try {
+      const response = await db("contexts").where("user_id", user_id);
+
+      return response;
+    } catch (error) {
+      return {
+        error: true,
+        message: `[Game]: ${error.message || "Unexpected error!"}`,
+      };
+    }
+  }
   static async saveContext({
     option_chosen,
     option_declined,
@@ -20,7 +31,10 @@ export class Game {
       }
       return { error: false, message: "Context saved successfully" };
     } catch (error) {
-      console.error(`[Game]: ${error.message || "Unexpected error!"}`);
+      return {
+        error: true,
+        message: `[Game]: ${error.message || "Unexpected error!"}`,
+      };
     }
   }
 }
