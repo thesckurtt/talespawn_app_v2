@@ -7,13 +7,13 @@ import RPGMasterText from "../components/RPGMasterText";
 import { BtnRPG } from "../components/BtnRPG";
 
 const Game = () => {
-  const { protectedRoute, user } = useAuth();
+  const { protectedRoute, user, token } = useAuth();
   const navigate = useNavigate();
   // console.log(user.name)
 
   protectedRoute();
 
-  const { token } = useAuth();
+  // const { token } = useAuth();
   const [isTyping, setIsTyping] = useState(false);
   const refSoundTrack = useRef(null); // Trilha sonora
   const refSoundMaster = useRef(null); // Voz do narrador
@@ -60,15 +60,25 @@ const Game = () => {
     };
   }, [playSoundTrack]);
 
-  function handleStartGame() {
+  async function handleStartGame() {
     // setIsInitialGame(false)
     // console.log("Iniciando a jornada...");
     // setTextToTyping(
     //   "Em um mundo onde antigas fortalezas em ruínas marcam os limites de reinos esquecidos, e florestas densas ocultam criaturas lendárias, o equilíbrio entre os homens e as forças da natureza começa a ruir. Povoados isolados vivem sob a constante ameaça de bandidos, feras e poderes arcanos há muito adormecidos, enquanto reis travam guerras silenciosas por territórios e influência. É nesse cenário de incerteza, onde a coragem vale mais que o ouro e alianças são tão frágeis quanto a lâmina de uma espada, que sua jornada se inicia."
     // );
 
+    window.electronGameActions.initialGame({ token }).then((response) => {
+      console.log(JSON.parse(response.contexts)[0]);
+      const text = `${JSON.parse(response.contexts)[0].trecho} 
+      <ul class="mt-4">
+      <li>${JSON.parse(response.contexts)[0].decisoes[0].texto}</li>
+      <li>${JSON.parse(response.contexts)[0].decisoes[1].texto}</li>
+      </ul>`;
+      setTextToTyping(text);
+    });
 
-    
+
+
     setTextToTyping(
       "Em um mundo..."
     );
@@ -117,9 +127,9 @@ const Game = () => {
           </div>
           {!isTyping && (
             <div className="d-flex justify-content-around align-items-center flex-direction-row">
-              {controlButton.map(btn => {
+              {controlButton.map((btn, index) => {
                 return (
-                  <BtnRPG label={btn.label} handleClick={btn.handleClick} />
+                  <BtnRPG key={index} label={btn.label} handleClick={btn.handleClick} />
                 )
               })}
             </div>
