@@ -4,6 +4,7 @@ import path from 'path'
 import { User } from './model/User.js';
 import { Auth } from './model/Auth.js';
 import IPCMiddleware from './middleware/IPCMiddleware.cjs';
+import { Game } from './model/Game.js';
 dotenv.config()
 
 let mainWindow = null
@@ -85,6 +86,18 @@ ipcMain.handle('user:isNewUser', IPCMiddleware(async (event, args) => {
   }
 }))
 
+// Game API
+ipcMain.handle('game:initialGame', IPCMiddleware(async (event, args) => {
+  try {
+    if (!args.error && args.jwt) {
+      const response = await Game.initialGame(args.jwt.user_id)
+      return { error: false, contexts: response }
+    }
+    return { error: true }
+  } catch (error) {
+    return { error: true, message: `[IPC game:getAllContexts]: ${error.message || "Unexpected error"}` }
+  }
+}))
 
 if (process.env.APP_DEBUG === "true") {
   ipcMain.on("actions-devtools", () => {
