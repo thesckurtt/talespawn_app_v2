@@ -10,7 +10,7 @@ export class Gemini {
     const response = await Gemini.AI.models.generateContent({
       model: "gemini-2.5-flash",
       contents: `
-      Você é um mestre de rpg, com base na história que está abaixo retorne apenas duas alternativas: História Base - “As Cinzas de Eldros”
+      Você é um mestre de rpg, com base na história que está abaixo retorne apenas duas alternativas e o tamanho do trecho deve ser de 30 palavras no maximo: História Base - “As Cinzas de Eldros”
 Mundo: O continente de Eldros, um reino outrora próspero, agora esconde segredos nas ruínas do seu passado glorioso. Há décadas, uma praga mágica conhecida como Bruma Pálida varreu o território, fazendo reis enlouquecerem, monstros surgirem das sombras e cidades desaparecerem da noite para o dia.
 
 Contexto:
@@ -44,6 +44,7 @@ Os reinos sobreviventes se isolaram. A Magia é agora temida e caçada. Ordem e 
     });
 
     console.log(response.text);
+    return response.text
   }
 
   static async generateContent(prompt) {
@@ -65,4 +66,4 @@ Os reinos sobreviventes se isolaram. A Magia é agora temida e caçada. Ordem e 
     // return data;
   }
 }
-Gemini.initialGamePrompt()
+// Gemini.initialGamePrompt()
