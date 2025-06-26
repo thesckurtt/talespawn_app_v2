@@ -1,11 +1,11 @@
 import React from 'react'
 import Typewriter from 'typewriter-effect';
 
-const RPGMasterText = ({setIsTyping, textToTyping }) => {
+const RPGMasterText = ({ setIsTyping, textToTyping }) => {
   return (
     <div className="rpg-master-text fs-5">
       <Typewriter
-      key={textToTyping}
+        key={textToTyping}
         onInit={(typewriter) => {
           setIsTyping(true)
           typewriter
@@ -15,13 +15,15 @@ const RPGMasterText = ({setIsTyping, textToTyping }) => {
               setIsTyping(false)
             })
             .start();
-        }}
+        }
+        }
 
         options={{
           autoStart: true,
           loop: false,
           delay: 45,
           cursor: '',
+          html: true
         }}
       />
     </div>
