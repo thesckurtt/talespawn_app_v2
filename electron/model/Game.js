@@ -1,6 +1,11 @@
 import db from "../database/db.js";
+import { Gemini } from "./Gemini.js";
 
 export class Game {
+  static async initialGame() {
+    const response = await Gemini.initialGamePrompt();
+    return response;
+  }
   static async getAllContexts(user_id) {
     try {
       const response = await db("contexts").where("user_id", user_id);
