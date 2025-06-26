@@ -5,7 +5,7 @@ contextBridge.exposeInMainWorld('electronAuthAPI', {
   register: (credentials) => ipcRenderer.invoke('auth:register', credentials),
 })
 
-contextBridge.exposeInMainWorld('electronUserAPI',{
+contextBridge.exposeInMainWorld('electronUserAPI', {
   isNewUser: (args) => ipcRenderer.invoke('user:isNewUser', args)
 })
 
@@ -16,7 +16,7 @@ contextBridge.exposeInMainWorld('electronActionsAPI', {
 
 contextBridge.exposeInMainWorld('electronGameActions', {
 
-  initialGame: () => ipcRenderer.invoke('game:initialGame'), // Usado para iniciar o jogo e gerar o primeiro prompt
+  initialGame: (args) => ipcRenderer.invoke('game:initialGame', args), // Usado para iniciar o jogo e gerar o primeiro prompt
   sendOption: (args) => ipcRenderer.invoke('game:sendOption', args), // Usado para enviar a opção escolhida pelo jogador
   getUserOptions: () => ipcRenderer.invoke('game:getUserOptions'), // Usado para obter as opções do jogador para montar o histórico
 })
