@@ -6,7 +6,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import InptGroup from '../components/InptGroup';
 import logo_xl from '../assets/img/logo-xl.png'
-import bg_home from '../assets/video/bg_home.mp4'
+//import bg_home from '../assets/video/bg_home.mp4'
 import bg_video_character_1 from '../assets/video/character_1.mp4'
 import bg_video_character_2 from '../assets/video/character_2.mp4'
 import bg_video_character_3 from '../assets/video/character_3.mp4'
@@ -19,6 +19,7 @@ import main_audio_character_4 from '../assets/audio/aud_4.mp3'
 
 import soundtrack from '../assets/audio/soundtrack_action.mp3'
 import { useAuth } from '../context/AuthContext';
+import RadarAtributos from '../components/Radaratributos';
 
 const characters = [
   {
@@ -26,10 +27,10 @@ const characters = [
     image: "./img/character_1.png",
     name: "Character 1",
     attributes: {
-      magic: 0,
-      attack: 2,
-      healing: 0,
-      perception: 5
+      magic: 10,       // inteligência
+      attack: 13,      // força
+      healing: 4,      // cura
+      perception: 18
     },
     bg_video: bg_video_character_1,
     main_audio: main_audio_character_1
@@ -39,10 +40,10 @@ const characters = [
     image: "./img/character_2.png",
     name: "Character 2",
     attributes: {
-      magic: 5,
-      attack: 1,
-      healing: 1,
-      perception: 0
+      magic: 20,
+      attack: 5,
+      healing: 12,
+      perception: 10
     },
     bg_video: bg_video_character_2,
     main_audio: main_audio_character_2
@@ -52,10 +53,10 @@ const characters = [
     image: "./img/character_3.png",
     name: "Character 3",
     attributes: {
-      magic: 0,
-      attack: 5,
-      healing: 0,
-      perception: 2
+      magic: 4,
+      attack: 20,
+      healing: 2,
+      perception: 9
     },
     bg_video: bg_video_character_3,
     main_audio: main_audio_character_3
@@ -65,15 +66,16 @@ const characters = [
     image: "./img/character_4.png",
     name: "Character 4",
     attributes: {
-      magic: 0,
-      attack: 5,
-      healing: 2,
-      perception: 2
+      magic: 11,
+      attack: 16,
+      healing: 17,
+      perception: 12
     },
     bg_video: bg_video_character_4,
     main_audio: main_audio_character_4
   }
 ];
+
 
 const Register = () => {
 
@@ -84,7 +86,7 @@ const Register = () => {
   const videoRef = useRef(null)
   const audioRef = useRef(null)
   const { register } = useAuth()
-  const [characterSelectedIndex, setCharacterSelectedIndex] = useState(0)
+  //const [characterSelectedIndex, setCharacterSelectedIndex] = useState(0)
   const [characterSelected, setCharacterSelected] = useState(characters[0])
 
   // Form
@@ -173,7 +175,14 @@ const Register = () => {
   }
   return (
     <>
-      <video ref={videoRef} id="background-video" autoPlay loop muted playsInline>
+      <video
+        ref={videoRef}
+        id="background-video"
+        autoPlay
+        loop
+        muted
+        playsInline
+      >
         <source src={characterSelected.bg_video} type="video/mp4" />
         Seu navegador não suporta vídeos em HTML5.
       </video>
@@ -188,15 +197,42 @@ const Register = () => {
 
         <div className="main-site-register-middle">
           <div className="right-border d-flex flex-column justify-content-center align-items-center">
-            <span className='p-2 text-white text-center fst-italic'>
+            <span className="p-2 text-white text-center fst-italic">
               {errorMessage}
             </span>
-            <form onSubmit={(e) => handleSubmit(e)} className="rpg-form" ref={formRef}>
-
-              <InptGroup name={'name'} type={'text'} label={'Nome'} value={name} handleChange={setName} />
-              <InptGroup name={'email'} type={'email'} label={'E-mail'} value={email} handleChange={setEmail} />
-              <InptGroup name={'password'} type={'password'} label={'Senha'} value={password} handleChange={setPassword} />
-              <InptGroup name={'nickname'} type={'text'} label={'Nick'} value={nickname} handleChange={setNickname} />
+            <form
+              onSubmit={(e) => handleSubmit(e)}
+              className="rpg-form"
+              ref={formRef}
+            >
+              <InptGroup
+                name={"name"}
+                type={"text"}
+                label={"Nome"}
+                value={name}
+                handleChange={setName}
+              />
+              <InptGroup
+                name={"email"}
+                type={"email"}
+                label={"E-mail"}
+                value={email}
+                handleChange={setEmail}
+              />
+              <InptGroup
+                name={"password"}
+                type={"password"}
+                label={"Senha"}
+                value={password}
+                handleChange={setPassword}
+              />
+              <InptGroup
+                name={"nickname"}
+                type={"text"}
+                label={"Nick"}
+                value={nickname}
+                handleChange={setNickname}
+              />
             </form>
           </div>
 
@@ -208,21 +244,24 @@ const Register = () => {
               loop={true}
               spaceBetween={30}
               onSlideChange={(swiper) => {
-                const index = swiper.realIndex
-                setCharacterSelectedIndex(index)
-                setCharacterSelected(characters[index])
+                const index = swiper.realIndex;
+                //setCharacterSelectedIndex(index)
+                setCharacterSelected(characters[index]);
               }}
               navigation={{
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
               }}
               className="mySwiper"
             >
-              {characters && characters.map(character => {
-                return (
-                  <SwiperSlide key={character.id}><img src={character.image} alt="Personagem 1" /></SwiperSlide>
-                )
-              })}
+              {characters &&
+                characters.map((character) => {
+                  return (
+                    <SwiperSlide key={character.id}>
+                      <img src={character.image} alt="Personagem 1" />
+                    </SwiperSlide>
+                  );
+                })}
               <div className="swiper-button-prev"></div>
               <div className="swiper-button-next"></div>
             </Swiper>
@@ -231,38 +270,23 @@ const Register = () => {
           <div className="left-border d-flex px-4 justify-content-start align-items-center">
             <div>
               <h1 className="rpg-text-title mb-4">Atributos</h1>
-              <div className="mb-3">
-                <span className="rpg-text-title fs-2">Magia</span>
-                <div className="progress-container">
-                  {[...Array(5)].map((_, i) => <div key={i} className={`pc-dot ${characterSelected.attributes.magic >= i ? "full" : ""}`}></div>)}
-                </div>
-              </div>
-              <div className="mb-3">
-                <span className="rpg-text-title fs-2">Ataque</span>
-                <div className="progress-container">
-                  {[...Array(5)].map((_, i) => <div key={i} className={`pc-dot ${characterSelected.attributes.attack >= i ? "full" : ""}`}></div>)}
-                </div>
-              </div>
-              <div className="mb-3">
-                <span className="rpg-text-title fs-2">Cura</span>
-                <div className="progress-container">
-                  {[...Array(5)].map((_, i) => <div key={i} className={`pc-dot ${characterSelected.attributes.healing >= i ? "full" : ""}`}></div>)}
-                </div>
-              </div>
-              <div className="mb-3">
-                <span className="rpg-text-title fs-2">Percepção</span>
-                <div className="progress-container">
-                  {[...Array(5)].map((_, i) => <div key={i} className={`pc-dot ${characterSelected.attributes.perception >= i ? "full" : ""}`}></div>)}
-                </div>
-              </div>
+              <RadarAtributos attributes={characterSelected.attributes}
+              characterId={characterSelected.id}
+              />
             </div>
-
           </div>
         </div>
 
         <div className="main-site-register-bottom d-flex justify-content-center align-items-center px-3 flex-column">
-          <button className="btn-rpg" onClick={handleFormSubmitClick}>Registrar</button>
-          <span className='text-white'>Já possuí conta? <Link to={'/login'} replace className='c-pointer label-rpg'>Entrar agora.</Link></span>
+          <button className="btn-rpg" onClick={handleFormSubmitClick}>
+            Registrar
+          </button>
+          <span className="text-white">
+            Já possuí conta?{" "}
+            <Link to={"/login"} replace className="c-pointer label-rpg">
+              Entrar agora.
+            </Link>
+          </span>
         </div>
       </main>
     </>
