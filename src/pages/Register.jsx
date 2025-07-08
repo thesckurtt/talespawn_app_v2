@@ -19,7 +19,7 @@ import main_audio_character_4 from '../assets/audio/aud_4.mp3'
 
 import soundtrack from '../assets/audio/soundtrack_action.mp3'
 import { useAuth } from '../context/AuthContext';
-import RadarAtributos from '../components/Radaratributos';
+import RadarAtributos from '../components/RadarAtributos';
 
 const characters = [
   {
@@ -267,7 +267,7 @@ const Register = () => {
             </Swiper>
           </div>
 
-          <div className="left-border d-flex px-4 justify-content-start align-items-center">
+          <div className="left-border d-flex px-4 justify-content-center align-items-center">
             <div>
               <h1 className="rpg-text-title mb-4">Atributos</h1>
               <RadarAtributos attributes={characterSelected.attributes}
