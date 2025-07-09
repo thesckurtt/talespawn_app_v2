@@ -1,0 +1,34 @@
+.habilidade-carousel {
+  padding: 20px 25px;
+  background: rgba(0, 0, 0, 0.5);
+  border-left: 4px solid #ffffff;
+  border-radius: 6px;
+  color: white;
+  min-height: 140px;
+  max-width: 350px;
+  animation: fadeIn 0.6s ease-in-out;
+  transition: all 0.3s ease;
+}
+
+.habilidade-carousel h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffd700;
+}
+
+.habilidade-carousel p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
