@@ -10,6 +10,7 @@
     "nodemon:app": "nodemon --watch . --ext js --exec \"npm run app\"",
     "build": "vite build",
     "lint": "eslint .",
+    "dev": "vite .",
     "electron": "electron .",
     "preview": "vite preview",
     "knex:migrate:latest": "npx knex migrate:latest --knexfile electron/database/knexfile.cjs",
