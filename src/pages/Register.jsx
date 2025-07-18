@@ -11,7 +11,6 @@ import bg_video_character_1 from '../assets/video/character_1.mp4'
 import bg_video_character_2 from '../assets/video/character_2.mp4'
 import bg_video_character_3 from '../assets/video/character_3.mp4'
 import bg_video_character_4 from '../assets/video/character_4.mp4'
-
 import main_audio_character_1 from '../assets/audio/aud_1.mp3'
 import main_audio_character_2 from '../assets/audio/aud_2.mp3'
 import main_audio_character_3 from '../assets/audio/aud_3.mp3'
@@ -212,6 +211,7 @@ const Register = () => {
                 type={"text"}
                 label={"Nome"}
                 value={name}
+                addClass={{input: "inpt-name"}}
                 handleChange={setName}
               />
               <InptGroup
@@ -219,6 +219,7 @@ const Register = () => {
                 type={"email"}
                 label={"E-mail"}
                 value={email}
+                addClass={{input: "inpt-email"}}
                 handleChange={setEmail}
               />
               <InptGroup
@@ -226,6 +227,7 @@ const Register = () => {
                 type={"password"}
                 label={"Senha"}
                 value={password}
+                addClass={{input: "inpt-password"}}
                 handleChange={setPassword}
               />
               <InptGroup
@@ -233,6 +235,7 @@ const Register = () => {
                 type={"text"}
                 label={"Nick"}
                 value={nickname}
+                addClass={{input: "inpt-nickname"}}
                 handleChange={setNickname}
               />
             </form>

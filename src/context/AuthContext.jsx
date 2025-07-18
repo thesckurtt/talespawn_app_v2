@@ -19,8 +19,9 @@ export const AuthProvider = ({ children }) => {
   })
 
   const [isNewUser, setIsNewUser] = useState(async () => {
-    const response = await window.electronUserAPI.isNewUser({token})
-    console.log(response)
+    // const response = await window.electronUserAPI.isNewUser({token})
+    const response = { error: false, isNewUser: true }
+    // console.log(response)
   })
 
   function protectedRoute() {
